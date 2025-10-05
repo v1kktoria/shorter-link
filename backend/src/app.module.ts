@@ -7,7 +7,7 @@ import { ClickModule } from './modules/click/click.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync(dataSourceOptions),
+    TypeOrmModule.forRoot(dataSourceOptions),
     ConfigModule.forRoot({ isGlobal: true }),
     LinkModule,
     ClickModule,
