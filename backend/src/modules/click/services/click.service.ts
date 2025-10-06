@@ -5,8 +5,6 @@ import { Repository } from "typeorm";
 import { GeoService } from "./geo.service";
 import { UserAgentParserService } from "src/common/utils/user-agent-parser.service";
 import { Link } from "src/modules/link/entities";
-import { ClickStatDto } from "../dto/click-stat.dto";
-import { plainToInstance } from "class-transformer";
 
 @Injectable()
 export class ClickService {
@@ -24,14 +22,12 @@ export class ClickService {
         await this.clickRepo.save(click);
     }
 
-    async getClicksStat(linkId: string, page = 1, limit = 20): Promise<ClickStatDto[]> {
-        const clicks = await this.clickRepo.findAndCount({
+    async getClicksStat(linkId: string, page = 1, limit = 20): Promise<[Click[], number]> {
+        return await this.clickRepo.findAndCount({
             where: { link: { id: linkId } },
             order: { created_at: "DESC" },
             skip: (page - 1) * limit,
             take: limit,
         });
-
-        return plainToInstance(ClickStatDto, clicks);
     }
 }
