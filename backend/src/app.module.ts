@@ -1,17 +1,21 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { dataSourceOptions } from './config/data-source';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LinkModule } from './modules/link/link.module';
 import { ClickModule } from './modules/click/click.module';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { GlobalExceptionFilter } from './common/exceptions/global-exception.filter';
 import { createGlobalValidationPipe } from './config/validation.pipe';
+import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(dataSourceOptions),
     ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: typeOrmConfig,
+    }),
     LinkModule,
     ClickModule,
   ],
