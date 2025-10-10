@@ -1,0 +1,28 @@
+.createCard {
+  padding: 30px;
+  margin-bottom: 18px;
+}
+
+.formRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.result {
+  margin-top: 16px;
+  padding: 20px;
+  background: var(--glass);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.result a {
+  color: var(--primary);
+  text-decoration: none;
+  margin-left: 8px;
+  word-break: break-all;
+}

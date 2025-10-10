@@ -1,0 +1,38 @@
+:root {
+  --bg: #f0f2f5;
+  --panel: #ffffff;
+  --brand: #003153;
+  --primary: #2A74A9;
+  --muted: #666;
+  --card-radius: 12px;
+  --container-w: 1100px;
+  --shadow: 0 6px 26px rgba(0,0,0,0.06);
+  --glass: rgba(0,0,0,0.03);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: #222;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.main {
+  margin-top: 28px;
+  margin-bottom: 32px;
+}
