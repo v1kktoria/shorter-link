@@ -5,3 +5,10 @@ export const createLinkApi = async (originalUrl: string): Promise<LinkCreatedRes
     const res = await api.post("/", { originalUrl });
     return res.data;
 }
+
+export const redirectLinkApi = async (shortCode: string): Promise<Response> => {
+    const res = await api.get(`/${shortCode}`, {
+        headers: { "Accept": "application/json" }
+    });
+    return res.data;
+}

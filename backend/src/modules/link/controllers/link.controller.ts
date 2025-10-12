@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Param, Post, Query, Res } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, Req, Res } from "@nestjs/common";
 import { LinkService } from "../services";
 import { ClickService } from "src/modules/click/services";
 import { CreateLinkDto } from "../dto/create-link.dto";
 import { LinkResponseDto } from "../dto";
-import type { Response } from "express";
+import type { Request, Response } from "express";
 import { Client } from "src/common/decorators/client.decorator";
 
 @Controller()
@@ -19,10 +19,16 @@ export class LinkController {
     }
 
     @Get(":shortCode")
-    async redirectLink(@Param("shortCode") shortCode: string, @Res() res: Response, @Client() client: {ip: string, userAgent: string}) {
+    async redirectLink(@Param("shortCode") shortCode: string, @Res() res: Response, @Req() req: Request, @Client() client: {ip: string, userAgent: string}) {
         const link = await this.linkService.findByShortCode(shortCode);
         await this.clickService.recordClick(link, client.ip, client.userAgent);
-        return res.redirect(link.originalUrl);
+
+        const acceptHeader = req.headers.accept || "";
+        if (acceptHeader.includes("application/json")) {
+            return res.json({ url: link.originalUrl });
+        } else {
+            return res.redirect(link.originalUrl);
+        }
     }
 
     @Get("stats/:shortCode")
