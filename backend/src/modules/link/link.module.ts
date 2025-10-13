@@ -4,6 +4,7 @@ import * as Entities from './entities';
 import { ClickModule } from '../click/click.module';
 import { LinkService } from './services/link.service';
 import { LinkController } from './controllers/link.controller';
+import { LinkRepository } from './repositories/link.repository';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { LinkController } from './controllers/link.controller';
     ClickModule,
   ],
   controllers: [LinkController],
-  providers: [LinkService],
+  providers: [LinkService, LinkRepository],
   exports: [],
 })
 export class LinkModule {}
