@@ -36,4 +36,10 @@ export class LinkController {
         const link = await this.linkService.findByShortCode(shortCode);
         return this.linkService.getLinkStat(link.id, Number(page), Number(limit));
     }
+
+    @Get("stats/:shortCode/summary")
+    async getStatsSummary(@Param("shortCode") shortCode: string) {
+        const link = await this.linkService.findByShortCode(shortCode);
+        return this.clickService.getClicksSummary(link.id);
+    }
 }

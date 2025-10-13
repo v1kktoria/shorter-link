@@ -4,11 +4,27 @@
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  background: var(--primary);
+  background: var(--brand);
   color: white;
+  opacity: 0.9;
+  transition: opacity 0.2s ease, transform 0.1s ease;
 }
+.btn:hover {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
 .ghost {
   background: transparent;
   border: 1px solid #ccc;
   color: #222;
+}
+
+.small {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+.medium {
+  padding: 10px 20px;
+  font-size: 14px;
 }

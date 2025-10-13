@@ -20,9 +20,3 @@
   flex-direction: column;
   gap: 13px;
 }
-.result a {
-  color: var(--primary);
-  text-decoration: none;
-  margin-left: 8px;
-  word-break: break-all;
-}

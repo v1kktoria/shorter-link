@@ -25,6 +25,13 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li {
   padding: 0;
 }
 
+ a {
+  color: var(--primary);
+  text-decoration: none;
+  margin-left: 6px;
+  word-break: break-all;
+}
+
 .container {
   width: 100%;
   max-width: var(--container-w);

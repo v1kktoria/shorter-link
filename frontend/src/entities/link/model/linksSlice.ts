@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { LinkCreatedResponse, LinksState} from '../types';
-import { createLinkApi } from '../api/linkApi';
+import { createLinkApi, getClicksSummaryApi, getStatsApi } from '../api/linkApi';
+import { LinkCreatedResponse, LinksState, LinkStatsResponse } from '../types/link';
+import { ClickSummaryDto } from '../types/click';
 
 const initialState: LinksState = {
   created: null,
+  stats: null,
+  summary: null,
   loading: false,
   error: null,
 };
@@ -13,6 +16,16 @@ export const createLink = createAsyncThunk<LinkCreatedResponse, string>(
   async (originalUrl) => {
     return await createLinkApi(originalUrl);
   }
+);
+
+export const getStats = createAsyncThunk<LinkStatsResponse, { shortCode: string; page?: number }>(
+  "links/getStats",
+  async ({ shortCode, page = 1 }) => getStatsApi(shortCode, page)
+);
+
+export const getClicksSummary = createAsyncThunk<ClickSummaryDto, string>(
+  "links/getClicksSummary",
+  async (shortCode) => getClicksSummaryApi(shortCode)
 );
 
 const linksSlice = createSlice({
@@ -41,6 +54,18 @@ const linksSlice = createSlice({
         state.loading = false;
         state.error = (action.error?.message ?? "Неизвестная ошибка");
       })
+
+      .addCase(getStats.pending, (state) => { state.loading = true; state.error = null })
+      .addCase(getStats.fulfilled, (state, action: PayloadAction<LinkStatsResponse>) => {
+        state.loading = false; state.stats = action.payload;
+      })
+      .addCase(getStats.rejected, (state, action) => {
+        state.loading = false; state.error = action.error?.message ?? "Ошибка при получении статистики";
+      })
+
+      .addCase(getClicksSummary.fulfilled, (state, action: PayloadAction<ClickSummaryDto>) => {
+        state.summary = action.payload;
+      });
   },
 });
 

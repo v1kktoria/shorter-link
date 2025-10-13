@@ -1,12 +1,4 @@
-export interface Click {
-    ip: string;
-    country: string;
-    region: string;
-    browser: string;
-    browserVersion: string;
-    os: string;
-    created_at: string;
-}
+import { Click, ClickSummaryDto } from "./click";
 
 export interface LinkCreatedResponse {
     shareUrl: string;
@@ -19,12 +11,14 @@ export interface LinkStatsResponse {
     total: number;
     page: number;
     limit: number;
-    Clicks: Click[];
+    clicks: Click[];
     created_at: string;
 }
 
 export interface LinksState {
   created?: LinkCreatedResponse | null;
+  stats?: LinkStatsResponse | null;
+  summary: ClickSummaryDto | null;
   loading: boolean;
   error?: string | null;
 }

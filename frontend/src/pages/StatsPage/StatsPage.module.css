@@ -1,0 +1,36 @@
+.infoCard h2 {
+  font-size: 1.5rem;
+  color: var(--brand);
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.infoCard strong {
+  color: var(--brand);
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  row-gap: 12px;
+  column-gap: 16px;
+  align-items: center;
+}
+
+.linkGroup {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  background: var(--glass);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.linkGroup button {
+  margin-left: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}

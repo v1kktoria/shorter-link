@@ -1,0 +1,26 @@
+.wrapper {
+  overflow-x: auto;
+  margin: 10px 0;
+  border-radius: var(--card-radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.table th {
+  color: white;
+  background: var(--brand);
+  padding: 16px 12px;
+  text-align: left;
+  border-bottom: 2px solid var(--glass);
+}
+
+.table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--glass);
+}
