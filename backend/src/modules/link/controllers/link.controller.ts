@@ -2,10 +2,12 @@ import { Body, Controller, Get, Param, Post, Query, Req, Res } from "@nestjs/com
 import { LinkService } from "../services";
 import { ClickService } from "src/modules/click/services";
 import { CreateLinkDto } from "../dto/create-link.dto";
-import { LinkResponseDto } from "../dto";
+import { LinkResponseDto} from "../dto";
 import type { Request, Response } from "express";
 import { Client } from "src/common/decorators/client.decorator";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
+@ApiTags("links")
 @Controller()
 export class LinkController {
     constructor(
@@ -14,11 +16,15 @@ export class LinkController {
     ) {}
 
     @Post()
+    @ApiOperation({ summary: "Создать сокращенную ссылку" })
+    @ApiResponse({ status: 200, type: LinkResponseDto })
     async createLink(@Body() createLinkDto: CreateLinkDto): Promise<LinkResponseDto> {
         return this.linkService.createShortLink(createLinkDto.originalUrl);
     }
 
     @Get(":shortCode")
+    @ApiOperation({ summary: "Переход по сокращенной ссылке" })
+    @ApiResponse({ status: 302, description: "Редирект на оригинальный URL" })
     async redirectLink(@Param("shortCode") shortCode: string, @Res() res: Response, @Req() req: Request, @Client() client: {ip: string, userAgent: string}) {
         const link = await this.linkService.findByShortCode(shortCode);
         await this.clickService.recordClick(link, client.ip, client.userAgent);
@@ -29,17 +35,5 @@ export class LinkController {
         } else {
             return res.redirect(link.originalUrl);
         }
-    }
-
-    @Get("stats/:shortCode")
-    async getStats(@Param("shortCode") shortCode: string, @Query("page") page = "1", @Query("limit") limit = "20" ) {
-        const link = await this.linkService.findByShortCode(shortCode);
-        return this.linkService.getLinkStat(link.id, Number(page), Number(limit));
-    }
-
-    @Get("stats/:shortCode/summary")
-    async getStatsSummary(@Param("shortCode") shortCode: string) {
-        const link = await this.linkService.findByShortCode(shortCode);
-        return this.clickService.getClicksSummary(link.id);
     }
 }
